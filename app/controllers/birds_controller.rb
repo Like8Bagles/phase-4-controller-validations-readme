@@ -9,7 +9,7 @@ class BirdsController < ApplicationController
 
   # POST /birds
   def create
-    bird = Bird.create(bird_params)
+    bird = Bird.create!(bird_params)
     render json: bird, status: :created
   end
 
@@ -22,7 +22,7 @@ class BirdsController < ApplicationController
   # PATCH /birds/:id
   def update
     bird = find_bird
-    bird.update(bird_params)
+    bird.update!(bird_params)
     render json: bird
   end
 
@@ -47,4 +47,8 @@ class BirdsController < ApplicationController
     render json: { error: "Bird not found" }, status: :not_found
   end
 
+  def render_unprocessable_entitiy_response(invalid)
+    render json: { errors: invalid.record.errors }, status: :unprocessable_entity
+  end
+  
 end
